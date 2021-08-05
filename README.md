@@ -1,4 +1,8 @@
 # BasicAlgo
 
 
-编程练手项目：数据结构，机器学习算法，图算法
+编程练手：
+
+- LCM
+- FNN
+- PageRank

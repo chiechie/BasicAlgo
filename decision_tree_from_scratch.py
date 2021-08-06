@@ -81,7 +81,6 @@ def build_stump(X, y):
     return sub_tree
 
 
-
 if __name__ == "__main__":
 	# loading the data set
 	dataset = load_iris(as_frame=True)

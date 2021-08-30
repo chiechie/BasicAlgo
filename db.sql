@@ -1,3 +1,26 @@
+-- A Subquery or Inner query or a Nested query is a query within another SQL query and embedded within the WHERE clause.
+-- A subquery is used to return data that will be used in the main query as a condition to further restrict the data to be retrieved.
+-- https://www.tutorialspoint.com/sql/sql-sub-queries.htm#:~:text=A%20Subquery%20or%20Inner%20query,the%20data%20to%20be%20retrieved.
+-- There are a few rules that subqueries must follow −
+-- sub query 可以出现在 select中，where中，from中
+-- sub query出现在 from中
+-- SELECT SP.TerritoryID,
+--        SP.BusinessEntityID,
+--        SP.Bonus,
+--        TerritorySummary.AverageBonus
+-- FROM   (SELECT   TerritoryID,
+--                  AVG(Bonus) AS AverageBonus
+--         FROM     Sales.SalesPerson
+--         GROUP BY TerritoryID) AS TerritorySummary
+--        INNER JOIN
+--        Sales.SalesPerson AS SP
+--        ON SP.TerritoryID = TerritorySummary.TerritoryID
+
+
+
+
+
+
 # 175. 组合两个表
 # SQL架构
 # 表1: Person

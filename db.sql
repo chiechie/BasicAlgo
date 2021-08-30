@@ -98,6 +98,45 @@ END
 
 
 
+--  178 分数排名
+-- SQL架构
+-- 编写一个 SQL 查询来实现分数排名。
+
+-- 如果两个分数相同，则两个分数排名（Rank）相同。请注意，平分后的下一个名次应该是下一个连续的整数值。换句话说，名次之间不应该有“间隔”。
+
+-- +----+-------+
+-- | Id | Score |
+-- +----+-------+
+-- | 1  | 3.50  |
+-- | 2  | 3.65  |
+-- | 3  | 4.00  |
+-- | 4  | 3.85  |
+-- | 5  | 4.00  |
+-- | 6  | 3.65  |
+-- +----+-------+
+-- 例如，根据上述给定的 Scores 表，你的查询应该返回（按分数从高到低排列）：
+
+-- +-------+------+
+-- | Score | Rank |
+-- +-------+------+
+-- | 4.00  | 1    |
+-- | 4.00  | 1    |
+-- | 3.85  | 2    |
+-- | 3.65  | 3    |
+-- | 3.65  | 3    |
+-- | 3.50  | 4    |
+-- +-------+------+
+-- 重要提示：对于 MySQL 解决方案，如果要转义用作列名的保留字，可以在关键字之前和之后使用撇号。例如 `Rank`
+
+
+select a.Score as Score,
+(select count(distinct b.Score) from Scores b where b.Score >= a.Score) as  `Rank`
+from Scores as a
+order by a.Score DESC
+
+select score, DENSE_RANK() OVER (ORDER BY Score DESC) as 'Rank' from Scores;
+
+
 -- 181. 超过经理收入的员工
 -- SQL架构
 -- Employee 表包含所有员工，他们的经理也属于员工。每个员工都有一个 Id，此外还有一列对应员工的经理的 Id。
@@ -124,6 +163,35 @@ select a.Name as Employee from Employee as a, Employee as b
 where a.ManagerId = b.Id and a.Salary > b.Salary;
 
 
+-- 182. 查找重复的电子邮箱
+-- SQL架构
+-- 编写一个 SQL 查询，查找 Person 表中所有重复的电子邮箱。
+
+-- 示例：
+
+-- +----+---------+
+-- | Id | Email   |
+-- +----+---------+
+-- | 1  | a@b.com |
+-- | 2  | c@d.com |
+-- | 3  | a@b.com |
+-- +----+---------+
+-- 根据以上输入，你的查询应返回以下结果：
+
+-- +---------+
+-- | Email   |
+-- +---------+
+-- | a@b.com |
+-- +---------+
+-- 说明：所有电子邮箱都是小写字母。
+
+# 关键词， select col1 from (select col1, col2 from t) as 临时表1 where cpl2 > 2
+select Email from (
+select Email, count(Email) as num from Person
+GROUP by Email
+) as statis
+where num > 1;
+
 
 -- 196. 删除重复的电子邮箱
 -- SQL架构
@@ -148,7 +216,6 @@ where a.ManagerId = b.Id and a.Salary > b.Salary;
  
 
 -- 提示：
-
 -- 执行 SQL 之后，输出是整个 Person 表。
 -- 使用 delete 语句。
 

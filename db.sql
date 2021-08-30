@@ -66,6 +66,100 @@ from Employee
 order by Salary desc
 limit 1 offset 1) as SecondHighestSalary
 
+-- 177. 第N高的薪水
+-- 编写一个 SQL 查询，获取 Employee 表中第 n 高的薪水（Salary）。
+
+-- +----+--------+
+-- | Id | Salary |
+-- +----+--------+
+-- | 1  | 100    |
+-- | 2  | 200    |
+-- | 3  | 300    |
+-- +----+--------+
+-- 例如上述 Employee 表，n = 2 时，应返回第二高的薪水 200。如果不存在第 n 高的薪水，那么查询应返回 null。
+
+-- +------------------------+
+-- | getNthHighestSalary(2) |
+-- +------------------------+
+-- | 200                    |
+-- +------------------------+
+
+
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+set N:=N-1;
+  RETURN (
+      select Salary from Employee 
+      GROUP BY  salary
+      order by Salary desc 
+      limit  N, 1
+  );
+END
+
+
+
+-- 181. 超过经理收入的员工
+-- SQL架构
+-- Employee 表包含所有员工，他们的经理也属于员工。每个员工都有一个 Id，此外还有一列对应员工的经理的 Id。
+
+-- +----+-------+--------+-----------+
+-- | Id | Name  | Salary | ManagerId |
+-- +----+-------+--------+-----------+
+-- | 1  | Joe   | 70000  | 3         |
+-- | 2  | Henry | 80000  | 4         |
+-- | 3  | Sam   | 60000  | NULL      |
+-- | 4  | Max   | 90000  | NULL      |
+-- +----+-------+--------+-----------+
+-- 给定 Employee 表，编写一个 SQL 查询，该查询可以获取收入超过他们经理的员工的姓名。在上面的表格中，Joe 是唯一一个收入超过他的经理的员工。
+
+-- +----------+
+-- | Employee |
+-- +----------+
+-- | Joe      |
+-- +----------+
+
+# 关键词，select * from 表1，表2，是对表1和表2作笛卡尔积
+
+select a.Name as Employee from Employee as a, Employee as b
+where a.ManagerId = b.Id and a.Salary > b.Salary;
+
+
+
+-- 196. 删除重复的电子邮箱
+-- SQL架构
+-- 编写一个 SQL 查询，来删除 Person 表中所有重复的电子邮箱，重复的邮箱里只保留 Id 最小 的那个。
+
+-- +----+------------------+
+-- | Id | Email            |
+-- +----+------------------+
+-- | 1  | john@example.com |
+-- | 2  | bob@example.com  |
+-- | 3  | john@example.com |
+-- +----+------------------+
+-- Id 是这个表的主键。
+-- 例如，在运行你的查询语句之后，上面的 Person 表应返回以下几行:
+
+-- +----+------------------+
+-- | Id | Email            |
+-- +----+------------------+
+-- | 1  | john@example.com |
+-- | 2  | bob@example.com  |
+-- +----+------------------+
+ 
+
+-- 提示：
+
+-- 执行 SQL 之后，输出是整个 Person 表。
+-- 使用 delete 语句。
+
+# delete 临时表1 from 临时表1， 临时表1 where *
+# DELETE p1就表示从p1表中删除满足WHERE条件的记录。
+# a. 从驱动表（左表）取出N条记录；
+# b. 拿着这N条记录，依次到被驱动表（右表）查找满足WHERE条件的记录；
+delete t1 from Person t1, Person t2
+where t1.Email = t2.Email and t1.Id > t2.Id
+
+
 
 
 -- 620. 有趣的电影
@@ -138,6 +232,8 @@ SET sex = CASE sex
 
 # 方法2的关键词：ascii和字母转换
 update salary set sex = char(ascii('m') + ascii('f') - ascii(sex));
+
+
 
 
 

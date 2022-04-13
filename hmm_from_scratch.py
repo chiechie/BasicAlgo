@@ -56,7 +56,7 @@ def forward_probality(T, N):
     """
     使用递归的算法，计算T时刻<s_t, obs_1,..., obs_t>出现的概率时，
     借助于上一个时刻的值<s_{t-1}, obs_1, ..., obs_{t-1}>的概率,
-    以及转移概率p(s_t | s_{t-1}), 和emmision概率p(obs_{t} | s_t)
+    以及转移概率p(s_t | s_{t-1}), 和emision概率p(obs_{t} | s_t)
     
     返回的是前向似然概率矩阵，
     第0行第t-1列表示: 观测值为(obs_1, obs_2, ..., obs_t), 状态=0的概率

@@ -1,7 +1,5 @@
 import pandas as pd
-#Loading the required modules
- 
-import numpy as np
+ import numpy as np
 from scipy.spatial.distance import cdist 
 from sklearn.datasets import load_digits
 from sklearn.decomposition import PCA

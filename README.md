@@ -11,6 +11,7 @@
 - [x] PageRank
 - [x] K均值聚类(k-means)
 - [x] 决策树(CART)
+- [x] HMM
 - [ ] 层次聚类（hierarchical clustering）
 - [ ] 逻辑回归
 - [ ] 线性回归

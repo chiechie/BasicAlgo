@@ -1,16 +1,16 @@
-# 
 import matplotlib
 matplotlib.use('TkAgg')
-# import matplotlib.pyplot as plt
+
+import  matplotlib.pyplot as plt
+matplotlib.rcParams['figure.figsize'] = (10.0, 8.0)
+
 import numpy as np
 import sklearn
 import sklearn.datasets
 import sklearn.linear_model
-import  matplotlib.pyplot as plt
-matplotlib.rcParams['figure.figsize'] = (10.0, 8.0)
 
 
-def train(X, Y , hidden_units, eps = 1e-15, n_epochs = 20000, learning_rate = 0.01):
+def train(X, Y, hidden_units, eps = 1e-15, n_epochs = 20000, learning_rate = 0.01):
 	W1 = np.random.randn(hidden_units, m_features + 1) / np.sqrt(hidden_units)
 	W2 = np.random.randn(2, hidden_units + 1 ) / np.sqrt(hidden_units)
 
@@ -49,37 +49,11 @@ def backward(probs, Y, H_full, W2, H):
 	return delta_W2, delta_W1
 
 
-
 if __name__ == "__main__":
 	np.random.seed(0)
 	X, Y = sklearn.datasets.make_moons(200, noise=0.20)
 	Y = Y.reshape(-1, 1)
 	n_samples, m_features = X.shape
-	# plt.scatter(X[:,0], X[:,1], s=40, c=Y, cmap=plt.cm.Spectral)
-	# plt.savefig("./moons.png")
-
-	clf = sklearn.linear_model.LogisticRegressionCV()
-	clf.fit(X, Y)
-
-	# Helper function to plot a decision boundary.
-	def plot_decision_boundary(pred_func):
-	    # Set min and max values and give it some padding
-	    x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
-	    y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5
-	    h = 0.01
-	    # Generate a grid of points with distance h between them
-	    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
-	    print("X.shape", X.shape, "xx.ravel()", xx.ravel().shape, np.c_[xx.ravel(), yy.ravel()].shape)
-	    # Predict the function value for the whole gid
-	    Z = pred_func(np.c_[xx.ravel(), yy.ravel()])
-	    Z = Z.reshape(xx.shape)
-	    # Plot the contour and training examples
-	    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)
-	    plt.scatter(X[:, 0], X[:, 1], c=Y, cmap=plt.cm.Spectral)
-	# Plot the decision boundary
-	plot_decision_boundary(lambda x: clf.predict(x))
-	plt.title("Logistic Regression")
-	plt.savefig("./LogisticRegression.png")
 
 	# 0. 设置网络结构
 	hidden_units = 5
@@ -136,23 +110,9 @@ if __name__ == "__main__":
 	eps = 1e-15
 	n_epochs = 20000
 	learning_rate = 0.01
-	for hidden_units in range(3,10):
-		W1, W2, probs = train(X, Y , hidden_units=hidden_units, eps = 1e-15, n_epochs = 20000, learning_rate = 0.01)
+	hidden_units = 5
 
-		# Set min and max values and give it some padding
-		x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
-		y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5
-		h = 0.01
-		# Generate a grid of points with distance h between them
-		xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
-		xx_yy = np.c_[xx.ravel(), yy.ravel()]
-		[_, _, _, probs] = foward(xx_yy, W1, W2)
-		Z = np.argmax(probs, axis=1).reshape(xx.shape)
-		# Plot the contour and training examples
-		plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)
-		plt.scatter(X[:, 0], X[:, 1], c=Y, cmap=plt.cm.Spectral)
-		plt.title("Decision Boundary for hidden layer size {}".format(hidden_units))
-		plt.savefig(f"nn_hidden_units={hidden_units}.png")
+	W1, W2, probs = train(X, Y , hidden_units=hidden_units, eps = 1e-15, n_epochs = 20000, learning_rate = 0.01)
 
 
 

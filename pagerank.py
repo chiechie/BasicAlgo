@@ -3,7 +3,7 @@ reference : https://en.wikipedia.org/wiki/PageRank
 """
 import numpy as np
 
-def pr(adjacency_arr, N_iter = 20, d = 0.85):
+def PageRank(adjacency_arr, N_iter = 20, d = 0.85):
     M = np.zeros(adjacency_arr.shape)
     for m in range(M.shape[0]):
         M[:, m] = adjacency_arr[:, m] / adjacency_arr[:, m].sum()
@@ -27,5 +27,5 @@ if __name__ == "__main__":
 	       [0.13803151],
 	       [0.20599017],
 	       [0.26375504]])
-	vn = pr(adjacency_arr, N_iter = 100, d = 0.85)
+	vn = PageRank(adjacency_arr, N_iter = 100, d = 0.85)
 	print("result\n", vn)

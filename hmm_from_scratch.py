@@ -24,19 +24,6 @@ def forward_likelihood(X, pi, A, B, T, N):
     # X = [2,0,2]
 
     """
-    # forward_prob = np.empty((N, T))
-    # for s in range(N):
-    #     obs1 = X[0].flatten()[0]
-    #     forward_prob[s, 0] = pi[s] * emissionprob[s, obs1]
-    # for t in range(1, T):
-    #     for s in range(N):
-    #         tmp = 0
-    #         for sp in range(N):
-    #             a = transmat[sp, s]
-    #             obst = X[t].flatten()[0]
-    #             tmp += forward_prob[sp, t-1] * a * emissionprob[s, obst]
-    #         forward_prob[s, t] = tmp
-
     alpha_matrix = np.empty((N, T))
     alpha_matrix[:, 0] = pi * B[:, X[0]]
 
